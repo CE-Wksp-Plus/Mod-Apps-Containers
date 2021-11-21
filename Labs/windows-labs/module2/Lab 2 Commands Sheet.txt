@@ -1,0 +1,35 @@
+------------------------------------
+LAB 2 WINDOWS CONTAINERS
+------------------------------------
+
+cd C:\labs\module2\
+docker images
+hostname
+docker run -it mcr.microsoft.com/windows/servercore:1809 powershell
+hostname
+exit
+docker run -it mcr.microsoft.com/windows/nanoserver:1809 CMD
+hostname
+exit
+
+cd .\labs\module2\iis\
+cat .\Dockerfile
+docker build -t myiis:v1 .
+docker run -d -p 80:80 myiis:v1
+docker ps
+docker inspect <container id> | FINDSTR "IPAddress"
+
+cd C:\labs\module2\aspnet4.7\
+docker rm -f (docker ps -aq)
+cat .\Dockerfile
+docker build -t aspnetapp:v4.7 .
+docker images
+docker run -d -p 80:80 aspnetapp:v4.7
+docker inspect <container id> | FINDSTR "IPAddress"
+
+cd C:\labs\module2\aspnetcore\
+cat .\Dockerfile
+docker build -t aspnetcoreapp:3.1 .
+docker run -d -p 8080:80 aspnetcoreapp:3.1
+docker inspect <container id> | FINDSTR "IPAddress"
+docker stop (docker ps -aq) ; docker rm (docker ps -aq)
