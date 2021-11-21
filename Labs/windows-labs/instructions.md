@@ -81,47 +81,47 @@ Since Windows Server 2016, Microsoft offers both Nano Server and Server Core in 
 
 1. You will need to run the commands in this section using the PowerShell console as an administrator. Right click the **PowerShell** icon on the taskbar and select "**Run as Administrator**".
 
-   ![](content/image3.png)
+   ![](Content/image3.png)
 
 1. The PowerShell console is now available to you. Make sure you are inside of the **module2** labs directory. You can do that by running the command `cd C:\labs\module2\ ` This will put you inside the **module2** lab folder where all the necessary files are located. Notice the file **Lab 2 Commands Sheet.txt** that contains the commands you will execute as part of this lab.
 
-   ![](content/image4.png)
+   ![](Content/image4.png)
 
 1. First, let's get the list of all the container images available on this Docker host by running the command `docker images`. Notice that you already have **windows/servercore** and **windows/nanoserver** images available to you representing **Server Core** and **Nano Server** images.
 
    > Knowledge: It's important to understand that you can always download specific version of **windows/servercore** and **windows/nanoserver** images by using an appropriate tag. For example, `docker pull mcr.microsoft.com/windows/servercore:10.0.17763.437` will pull the server core image that has a version number 10.0.17763.437. Notice the [mcr.microsoft.com](https://azure.microsoft.com/en-us/blog/microsoft-syndicates-container-catalog/) registry that is the container registry hosted on Microsoft servers, even though the images are discoverable on Docker Hub. All the concepts you learned about docker (Linux) containers and images generally apply as-is to windows containers too. The main deference is the fact that windows containers require the windows operating system as a host, while the Linux containers require Linux operating system.
 
-   ![](content/image5_2.PNG)
+   ![](Content/image5_2.PNG)
 
 1. You will now run a container based on **Server Core** image (**mcr.microsoft.com/windows/servercore**). Before you do that, run the command `hostname`. This will reveal the hostname of your virtual machine.
 
    > Note:Please note that your host machine name may be different.
 
-   ![](content/image6.png)
+   ![](Content/image6.png)
 
 1. Run the command `docker run -it mcr.microsoft.com/windows/servercore:1809 powershell `. Please be patient as it will take a minute or so for this command to work. The **-it** switch provides you with an interactive session. The **powershell** is a parameter passed as an argument which basically gives you access to Powershell (command line) running inside the container. Technically, the **-it** switch puts you inside a running container.
 
    > Note:Please be patient as it will take a minute or so for this command to work. The "**it**" switch provides you with an interactive session. The '**CMD'** is a parameter passed as an argument which basically gives you access to the CMD (command line) running inside the container. Technically, the "**it**" switch puts you inside a running container.
 
-   ![](content/image7.png)
+   ![](Content/image7.png)
 
 1. Run the command `hostname`. This time you are running it inside the running container. Notice that the host name is different from the host name you get in step 5. The host name you see inside the container is the host name of the container itself. It is based on the container ID. You may want to run other commands as you wish or checkout the filesystem that is independent from the host's filesystem.
 
-   ![](content/image8.png)
+   ![](Content/image8.png)
 
 1. Finally, exit the interactive session by typing `exit` and pressing **Enter**. This will take you back to the PowerShell console on the host.
 
-   ![](content/image9.png)
+   ![](Content/image9.png)
 
 1. Now let's run another container based on **Nano Server** image ( **mcr.microsoft.com/windows/nanoserver**). To do that run the command `docker run -it mcr.microsoft.com/windows/nanoserver:1809 CMD`
 
    > Note:It might take a few seconds to load. This time we are starting a Windows Command prompt instead of Powershell inside of the container)
 
-   ![](content/image10.png)
+   ![](Content/image10.png)
 
 1. Run the command `hostname`. Notice that the host name is different from host name you get in the previous steps. Again, the host name you see inside the container is the host name of the container itself, which is based on the container id. You can run other commands as you wish.
 
-   ![](content/image11.png)
+   ![](Content/image11.png)
 
 1. Finally, exit the interactive session by typing `exit` and pressing **Enter**. This will take you back to the PowerShell console on the host.
 
@@ -139,11 +139,11 @@ In the exercise you will learn how to install IIS Web Server (Web Server Role) o
 
 1. Make sure you have a PowerShell Console open as an administrator (if you have followed previous task you should already be running a Console). Also, change the current directory to "**iis**" by running the command `cd c:\labs\module2\iis\ `
 
-   ![](content/image12.png)
+   ![](Content/image12.png)
 
 1. The iis folder contains the Dockerfile with instructions to install IIS Server (Web Server Role) on the Windows Server Core base image. Display the Dockerfile by running the command `cat .\Dockerfile`
 
-   ![](content/image13.png)
+   ![](Content/image13.png)
 
    - The **FROM** instruction points to the **mcr.microsoft.com/windows/servercore** to be used as a base image for the new container image
    - The **RUN** instruction executes PowerShell to install Windows Feature "Web Server" (IIS Server)
@@ -155,11 +155,11 @@ In the exercise you will learn how to install IIS Web Server (Web Server Role) o
 
    > Note: **STEP 3/6** of the build process performs the installation of the Web-Server (IIS Server) and may take few minutes. Eventually you should see the results as follow.
 
-   ![](content/image15.png)
+   ![](Content/image15.png)
 
 1. Run a new container based on **myiis:v1** image by using the command: `docker run -d -p 8099:80 myiis:v1`
 
-   ![](content/image16.png)
+   ![](Content/image16.png)
 
 1. The full container ID is shown after the run command (**d83** in the above screenshot), or can be obtained by using `docker ps`
 
@@ -168,7 +168,7 @@ In the exercise you will learn how to install IIS Web Server (Web Server Role) o
 
 1. Open any web browser of your choice and browse to the IP address from the previous step.
 
-   ![](content/image18.png)
+   ![](Content/image18.png)
 
    > Note: You can get the container's IP address of the container with **docker inspect** command as follow: **docker inspect --format '{{ .NetworkSettings.Networks.nat.IPAddress}} ' containerid **. When accessing the container using it's IP Address you would use the port the container is listening on (port 80 in this case)
 
@@ -191,15 +191,15 @@ In this task, you will learn how to package an existing ASP.NET 4.7 web applicat
 
 1.  Make sure you have a PowerShell console open as an administrator (if you have followed previous task you should already be running a console). Also, change the current directory to **aspnet 4.7** by running the command `cd C:\labs\module2\aspnet4.7\ `
 
-    ![](content/image19.png)
+    ![](Content/image19.png)
 
 1.  Before proceeding further, let's stop and remove all the running containers from previous task. Run the command `docker rm -f (docker ps -aq)`
 
-    ![](content/image20.png)
+    ![](Content/image20.png)
 
 1.  Let's examine the Dockerfile. Display its content by running the command `cat .\Dockerfile`
 
-    ![](content/image22.png)
+    ![](Content/image22.png)
 
     - The first noticeable statements are the two **FROM** statements which are used in what is called, a **multi-staged build** process. It allows us to create two Docker images with a single **docker build** command
     - The first image is built on top of the .NET 4.7 SDK base image containing all utilities necessary to build your application: **mcr.microsoft.com/dotnet/framework/sdk:4.7.2-windowsservercore-ltsc2019**. This resulting image will be much bigger than what is required to simply run your application. This build stage will produce all application artifacts that will be picked up when building the second image. They will be copied in the folder **/app/WebAppLegacy** of the first image. Also note that this first image is identified as **build**
@@ -211,11 +211,11 @@ In this task, you will learn how to package an existing ASP.NET 4.7 web applicat
 
 1.  To run a container with the ASP.NET 4.7 web application based on the container image we just built, run the command: `docker run -d -p 8088:80 aspnetapp:v4.7`
 
-    ![](content/image24.png)
+    ![](Content/image24.png)
 
 1.  Start your default browser and connect to the web site running in the container using the port mapped from the host (8088) : `start http://localhost:8088`
 
-    ![](content/image26.png)
+    ![](Content/image26.png)
 
 ### Congratulations!
 
@@ -239,11 +239,11 @@ In this exercise, you will package a simple ASP.NET Core MVC application into a 
 
 1.  Change to the relevant directory using the following command: `cd C:\labs\module2\aspnetcore`
 
-    ![](content/image53.png)
+    ![](Content/image53.png)
 
 1.  You are provided with a Dockerfile. View the content of the Dockerfile by running the command `cat .\Dockerfile`. The Dockerfile should look like the one below (note this is a multi-stage Dockerfile just like the .NET 4.7 example).
 
-    ![](content/image54_2.PNG)
+    ![](Content/image54_2.PNG)
 
 1.  To create the container image run the command `docker build -t aspnetcoreapp:3.1 .`
 
@@ -251,13 +251,13 @@ In this exercise, you will package a simple ASP.NET Core MVC application into a 
 
 1.  Launch the container running the app inside it by running the command `docker run -d -p 9000:80 aspnetcoreapp:3.1`
 
-    ![](content/image56_2.PNG)
+    ![](Content/image56_2.PNG)
 
 1.  You are now running ASP.NET Core application inside the container listening on the port 80 which is mapped to port 9000 on the host.
 
 1.  To see the ASP.NET Core web application in action open the web browser and navigate to **localhost** port **9000** `start http://localhost:9000 `. This will take you to the Home page of the Web Application.
 
-    ![](content/image58_3.png)
+    ![](Content/image58_3.png)
 
 1.  Run the following command to stop and remove all containers: `docker stop (docker ps -aq) ; docker rm (docker ps -aq)`.
 
@@ -265,7 +265,7 @@ In this exercise, you will package a simple ASP.NET Core MVC application into a 
 
 You have successfully completed this lab. Click **Next** to advance to the next lab.
 
-![](content/module stop.png)
+![](Content/module stop.png)
 
 # Module 3 - Docker Advanced Concepts
 
@@ -305,20 +305,20 @@ Volumes are initialized when a container is created. Some of the key characteris
 
 1.  You will need to run the commands in this section using the PowerShell console as an administrator. Right click the **PowerShell** icon on the taskbar and select **Run as Administrator**.
 
-    ![](content/media/image3.png)
+    ![](Content/media/image3.png)
 
 1.  Navigate to your C:\\ drive: `cd C:\\`
 
 1.  Create a directory on the host operating system and then add a plain text file to it. Create a new directory on the C drive by running the command `mkdir MyData`
 
-    ![](content/media/image59.png)
+    ![](Content/media/image59.png)
 
 1.  Display the contents of the folder you just created in previous step by running the command `ls MyData`. It is currently empty.
 
 1.  You are now ready to run a container in the interactive mode and mount the host directory as a data volume. Run the command
     `docker run -it -v C:/MyData/:C:/Data/ mcr.microsoft.com/windows/nanoserver:1809 CMD`
 
-        ![](content/mod3image7.png)
+        ![](Content/mod3image7.png)
 
         >Knowledge: Notice the **-v** switch that is required to mount the host directory **C:\MyData** inside the container as **C:\Data**. This will result in container access to contents of **C:\MyData** on the host inside the container as **C:\Data**. You can choose same name for the directory inside the container and host but it's not mandatory as you see in the above command (**C:\MyData** on the host and **C:\Data** inside the container)
 
@@ -326,17 +326,17 @@ Volumes are initialized when a container is created. Some of the key characteris
 
     > Note:The actual hostname for your container may be different than pictured below. Most importantly though, the container hostname will be different from you VM hostname.
 
-    ![](content/media/image64.png)
+    ![](Content/media/image64.png)
 
 1.  List the directories by running the command `dir`.
 
     > Note:Notice the **data** directory as part of the listing.
 
-    ![](content/media/image65.png)
+    ![](Content/media/image65.png)
 
 1.  Create a file in the folder and add more text to it. Run the command: `echo File is updated by container: %COMPUTERNAME% >> c:\data\file.txt`
 
-    ![](content/mod3image12.png)
+    ![](Content/mod3image12.png)
 
     > Note: **%COMPUTERNAME%** is equivalent to **hostname**
 
@@ -346,21 +346,21 @@ Volumes are initialized when a container is created. Some of the key characteris
 
     > Note:Notice **file.txt** is present inside the data directory. This is the same file you created earlier on the host.
 
-    ![](content/media/image66.png)
+    ![](Content/media/image66.png)
 
 1.  Look at content inside the **file.txt** by running the command `more c:\data\file.txt`
 
-    ![](content/mod3image11.png)
+    ![](Content/mod3image11.png)
 
 1.  You can now exit the container and return to host by running the command `exit`
 
-    ![](content/media/image70.png)
+    ![](Content/media/image70.png)
 
 1.  On the host PowerShell Console run the command `gc C:\MyData\file.txt`. gc stands for **Get-Content**.
 
     > Note:Notice that changes made from the container persist on the host by the **file.txt**.
 
-    ![](content/media/image71.png)
+    ![](Content/media/image71.png)
 
 1.  Run `docker ps -a` to get the ID of stopped containers, and then record the container ID in the following text box:
 
@@ -369,37 +369,37 @@ Volumes are initialized when a container is created. Some of the key characteris
 
     > Note:To gather more information about container and volumes that has been mounted you can run the command `docker inspect <ContainerID2>`.
 
-    ![](content/media/image72.png)
+    ![](Content/media/image72.png)
 
 1.  The docker inspect command outputs a rather large JSON file on the display. You may need to scroll down to find the section labeled "Mounts".
 
     > Note:Notice that **c:\\mydata** is the source and **c:\\data** is the destination. Also, RW refers to Read/Write.
 
-    ![](content/media/image73.png)
+    ![](Content/media/image73.png)
 
 1.  Let's run another container in interactive mode and mount the host directory as a data volume. Run the command `docker run -it -v C:/MyData/:C:/Data/ mcr.microsoft.com/windows/nanoserver:1809 Cmd`
 
-    ![](content/mod3image7.png)
+    ![](Content/mod3image7.png)
 
 1.  Look at content inside the **file.txt** by running the command `more c:\data\file.txt`
 
-    ![](content/mod3image11.png)
+    ![](Content/mod3image11.png)
 
 1.  Add more text to it. Run the command: `echo File is updated by container: %COMPUTERNAME% >> c:\data\file.txt`
 
 1.  On the host machine, go to **C:\MyData** from the file explorer and open **file.txt**
 
-    ![](content/image11_hostread.png)
+    ![](Content/image11_hostread.png)
 
 1.  Update the content of the file with notepad and save it.
 
-    ![](content/image11_hostupdate.png)
+    ![](Content/image11_hostupdate.png)
 
     > Note: The two different **hostnames** correspond to the two Ids of the containers that wrote in the file.
 
 1.  Go back to the Powershell windows and check that the container can see the host changes with the command `more c:\data\file.txt`
 
-    ![](content/image11_containerseeupdate.png)
+    ![](Content/image11_containerseeupdate.png)
 
     > Note: Because of concurrency challenges, you would probably not have multiple containers and hosts writing in the same file. The purpose of this exercise was only to show how we can persistent data across containers beyond their short lifecycle.
 
@@ -415,15 +415,15 @@ In this exercise, you will learn how to create and use a shared-storage volume. 
 
 1.  First, let's create a volume by running the command following command from a Powershell window `docker volume create -d local myvolume`
 
-    ![](content/media/image75.png)
+    ![](Content/media/image75.png)
 
 1.  You can list all the volumes by running the command `docker volume ls`. Notice that **myvolume** is available as a local driver.
 
-    ![](content/media/image76.png)
+    ![](Content/media/image76.png)
 
 1.  You can use **docker inspect** command with the volumes too. Run the command `docker inspect myvolume`
 
-        ![](content/mod3image21.png)
+        ![](Content/mod3image21.png)
 
         >Note: **Mountpoint** is set at a location on the **C** drive under the **ProgramData\docker** folder. This is the default location for local storage drivers. If you use another commercial storage driver,
 
@@ -433,21 +433,21 @@ In this exercise, you will learn how to create and use a shared-storage volume. 
 
 1.  On the PowerShell command prompt inside the container, run the command `dir` to list the directories available in the container.
 
-    ![](content/mod3image23.png)
+    ![](Content/mod3image23.png)
 
 1.  Notice the data directory. You can now add/remove files to it. Let's create a new text file and add text content to it. On the command prompt run the command `"File created on the host: $(hostname)" >> c:\data\sample.txt`.
 
-    ![](content/mod3image24.png)
+    ![](Content/mod3image24.png)
 
 1.  Confirm that file sample.txt has been created successfully by running the command `more c:\data\sample.txt`
 
-    ![](content/mod3image25.png)
+    ![](Content/mod3image25.png)
 
 1.  Now exit the container by running the command `exit`. This will take you back to PowerShell console on the host.
 
 1.  To check the content of sample.txt file from the host run the command `gc C:\\ProgramData\\docker\\volumes\\myvolume\\\_data\sample.txt`.
 
-    ![](content/media/image82.png)
+    ![](Content/media/image82.png)
 
 ### Congratulations!
 
@@ -479,31 +479,31 @@ In this exercise, you will work with a simple "Famous Quotes" application that i
 
 1. Launch the **PowerShell Console** (if not already running) and change your current directory to "**compose**" folder by running the command `cd C:\labs\module3\compose`
 
-   ![](content/media/image83.png)
+   ![](Content/media/image83.png)
 
 1. Before proceeding further let's stop all the running containers from previous task. Run the command `docker stop (docker ps -aq)`
 
-   ![](content/media/image84.png)
+   ![](Content/media/image84.png)
 
 1. First, look at directory structure by running the command `dir`.
 
-   ![](content/media/image85.png)
+   ![](Content/media/image85.png)
 
 1. Notice that you have two folders "**mywebapi**" and "**mywebapp**" representing the web API and web application, respectively. First, you will inspect the piece of code that is making the RESTful call to mywebapi. To do that run the command: `gc .\mywebapp\Controllers\HomeController.cs`
 
-   ![](content/media/image86.png)
+   ![](Content/media/image86.png)
 
 1. This displays the code within HomeController.cs file. You may need to scroll down to view the code that calls the mywebapi RESTful endpoint. The actual URI is [http://demowebapi:9000/api/quotes](http://demowebapi:9000/api/quotes).
 
    > Note:Notice the use of **demowebapi** which is not a FQDN nor IP Address, but rather a service that is defined within the **docker-compose.yml** file (which we will review next). By using the service name, the web application can simply refer to the Web API app (using that same name) across all environments, including development, test and production etc.
 
-   ![](content/media/image87.png)
+   ![](Content/media/image87.png)
 
 1. Let's inspect the **docker-compose.yml** file. Run the command `gc .\docker-compose.yml`
 
-   ![](content/media/image88.png)
+   ![](Content/media/image88.png)
 
-   ![](content/image89_2.PNG)
+   ![](Content/image89_2.PNG)
 
    > Knowledge: First, notice the structure of the file. All .YML files follow the YAML structure (more information about the extension can be found at <https://www.reviversoft.com/file-extensions/yml>. For docker compose usage you first define the version number and then specify the structure of your services. In this case, we have two services, namely "_demowebapp_" and "_demowebapi_". The demowebapp service declaration starts with the build instruction and points to folder "_mywebapp_" that contains the ASP.NET core application and relevant Dockerfile (recall the file entitled, DockerFile, that resides in the root of the application). Note how the compose file contains sections, or "instructions": Services, networks, etc. The build instruction is equal to the _docker build_ command. Then ports are mapped from the host's port 80 to the container's port 80.The _depends_on_ directs the docker-compose to launch the _demowebapi_ container first since _demowebapp_ depends on it. Also, the discoverability is done by using the service names (as mentioned in the paragraph above whereas, _demowebapp_ can access _demowebapi_ by its service name, rather than FDQN or IP Address).
    >
@@ -517,35 +517,35 @@ In this exercise, you will work with a simple "Famous Quotes" application that i
 
 1. At this point, you are all set to run the multi-container application with a single command `docker-compose.exe up -d`
 
-   ![](content/media/image90.png)
+   ![](Content/media/image90.png)
 
    > Knowledge: The docker-compose.exe tries to make it simple to start and stop the services (running containers) with commands like up and down. The **-d** switch works the same as when used with the docker build command, which instructs docker to run the container in the background rather than interactively. If you don't provide any switch parameter, the default is set to interactive.
 
    > Note:As the command executes, you will notice that the "mywebapi" container is built first. This is because we mention in the yml file that "mywebapp" depends on it, so it will build first. Also, if the image for "mywebapi" already exists, then it won't be built again.
 
-   ![](content/mod3image35_2.PNG)
+   ![](Content/mod3image35_2.PNG)
 
    > Note:Next, Docker will build the container image for "mywebapp."
 
-   ![](content/mod3image36_2.PNG)
+   ![](Content/mod3image36_2.PNG)
 
    > Note:You can safely ignore any warnings.
 
 1. Finally, docker-compose will run both containers using the instructions from the docker-compose.yml file.
 
-   ![](content/media/image93.png)
+   ![](Content/media/image93.png)
 
 1. You can check details about running docker cmpose services by executing the command `docker-compose ps`
 
-   ![](content/image94_3.png)
+   ![](Content/image94_3.png)
 
 1. Open web browser of your choice and browse to localhost `start http://localhost`. You should land on the home page of web application as shown below.
 
-   ![](content/mod3image40_3.png)
+   ![](Content/mod3image40_3.png)
 
    > Note:To test the Web API you will can select the **Quotes** option from the top menu bar. This will result in a call to web API and results being displayed on the web application.
 
-   ![](content/image97_2.PNG)
+   ![](Content/image97_2.PNG)
 
 # Docker Compose Down
 
@@ -575,7 +575,7 @@ You can retrieve container networks using the Docker CLI.
 
 1. Docker provides native docker command that provides list of networks available to docker. To view the list of networks available to docker run the command `docker network ls`.
 
-   ![](content/mod3image43.png)
+   ![](Content/mod3image43.png)
 
    > Knowledge: The 'nat' network is the default network for containers running on Windows. Any containers that are run on Windows without any flags or arguments to implement specific network configurations will be attached to the default 'nat' network, and automatically assigned an IP address from the 'nat' network's internal prefix IP range. The default nat network also supports port forwarding from container host to internal containers. For example, you can simply run SQL Server Express in a container by providing the "p" flag so that specified port numbers will be mapped from host to container.
 
@@ -583,17 +583,17 @@ You can retrieve container networks using the Docker CLI.
 
    > Note:Notice the output is in JSON format. The "Containers" key (which is empty in this case) refers to all containers that are using the specified network. The containers key is empty in this case because there are no containers currently running.
 
-   ![](content/mod3image44.png)
+   ![](Content/mod3image44.png)
 
 1. Run `ipconfig` to see the two networks: the physical network, localdomain, and the local container network, nat.
 
-   ![](content/mod3image44_localnetwork.png)
+   ![](Content/mod3image44_localnetwork.png)
 
 1. Launch a new container by running a command `docker run -d mcr.microsoft.com/windows/nanoserver:1809 ping -t localhost**+++. Once the container is running execute the command +++**docker inspect nat`
 
    > Note:Notice that this time the "Containers" section now includes information pertaining to the container that is using the nat network including its ID and IPv4 address.
 
-   ![](content/mod3image45.png)
+   ![](Content/mod3image45.png)
 
 # Create a custom Docker nat network
 
@@ -607,7 +607,7 @@ Docker allows you to create custom nat networks. In this task, you will create a
 
 1. Use the **+++docker network ls**+++ command and notice that "**custom-nat**" network is available.
 
-   ![](content/mod3image48.png)
+   ![](Content/mod3image48.png)
 
 1. To use the new custom nat network for containers launch a new container by using the command `docker run -d --network=custom-nat mcr.microsoft.com/windows/nanoserver:1809 ping -t localhost`
 
@@ -617,35 +617,35 @@ Docker allows you to create custom nat networks. In this task, you will create a
 
    > Note:Notice the subnet and gateway values reflect the values you used earlier during the creation of the network. Also note that the container's IPv4 Address, 192.168.15.224 (may be different in your case), is in the custom-nat network.
 
-   ![](content/mod3image49.png)
+   ![](Content/mod3image49.png)
 
 1. To confirm that the container host and access container run the command `ping &lt;Container - IPv4 Address&gt;`
 
    > Note: You can look for container's IP Address in the output from previous command. Notice that the host can successfully access the container using its IP.
 
-   ![](content/mod3image50.png)
+   ![](Content/mod3image50.png)
 
 1. Now let's start a new container on the nat network and open a command prompt `docker run -it --network=nat mcr.microsoft.com/windows/nanoserver:1809 cmd`
 
 1. We can try to ping the previous container with `ping <Container - IPv4 Address>` where the IP Address is the same one we just pinged from the host. Hit **Ctrl-C** to stop the ping operation.
 
-   ![](content/image50_pingFromContainer.png)
+   ![](Content/image50_pingFromContainer.png)
 
    > Note: Because the two containers are on separated networks, they cannot ping each other using their IP Address.
 
 1. Run `ipconfig**+++ from the container to check the that IP Address belongs to the nat network. Then run +++**exit` to go back to the host.
 
-   ![](content/image50_containerIp.png)
+   ![](Content/image50_containerIp.png)
 
 1. Remove all containers so that you can then remove the custom network you have created (if containers are still attached to the network, the network deletion will fail). `docker rm (docker ps -aq) -f`
 
 1. You may now remove the **custom-nat** network `docker network rm custom-nat`
 
-   ![](content/image50_rmCustomNetwork.png)
+   ![](Content/image50_rmCustomNetwork.png)
 
 1. Check that only nat network remains `docker network ls`
 
-   ![](content/mod3image51.png)
+   ![](Content/mod3image51.png)
 
 ### Congratulations!
 
@@ -678,11 +678,11 @@ In this task, you will launch a container with a pre-defined memory limit, to en
    **Container ID**  
    @lab.TextBox(ContainerID3)
 
-   ![](content/mod3image52.png)
+   ![](Content/mod3image52.png)
 
 1. To test the memory limit of container you will use the **testlimit** tool. Run the following command `C:\tools\testlimit64.exe -d -c 1024`
 
-   ![](content/mod3image53.png)
+   ![](Content/mod3image53.png)
 
    > Note:The tool will attempt to push the memory consumption of the container to 1024 MB (1 GB). However,because the container can't go beyond 500 MB, the value of memory consumed will always be under 500 MB (the exact value of how much memory is used will vary but won't go beyond the maximum available memory on container which is 500 MB)
 
@@ -692,7 +692,7 @@ In this task, you will launch a container with a pre-defined memory limit, to en
 
 1. Notice the value under the column "**PRIV WORKING SET**". This represents the memory usage by the container; this is the value that docker has constrained to 500 MB.
 
-   ![](content/mod3image54.png)
+   ![](Content/mod3image54.png)
 
 1. Now, you will reclaim the memory occupied by the running tool. Go back to the **PowerShell** console that was used to run the container and press the key combination "**Ctrl+C**".
 
@@ -702,7 +702,7 @@ In this task, you will launch a container with a pre-defined memory limit, to en
 
    > Note:Notice that memory usage has dropped significantly.
 
-   ![](content/mod3image55.png)
+   ![](Content/mod3image55.png)
 
 1. Hit "**Ctrl+C**" to stop the docker stats command
 
@@ -718,7 +718,7 @@ In addition to setting a memory constaint, you can also constrain the CPU usage 
 
    > Note:Take note of the number of cores available. In this case there are 2 cores, but the value you see may differ.
 
-   ![](content/mod3image56.png)
+   ![](Content/mod3image56.png)
 
 1. You will now launch a new container and limit its host CPU utilization to ~25%. Make sure that you set half of the availble CPU here. If your machine just has 4 cores, set the value to 1.
 
@@ -733,17 +733,17 @@ In addition to setting a memory constaint, you can also constrain the CPU usage 
 
 1. Go back to the **PowerShell** console on the host (this is the second console that you opened earlier). Run the docker stats command `docker stats <ContainerID4>`
 
-   ![](content/mod3image57.png)
+   ![](Content/mod3image57.png)
 
 1. Go back to the **PowerShell** console in the container and make sure that you are authorized to run PS1 scripts by running the following command `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`
 
 1. You will now test the CPU constraint of ~25% by stress testing the CPU utilization on the container. Switch back to the **PowerShell** console that you used earlier to launch the container with a CPU usage limit. Execute the command `C:\tools\cpu-stress.ps1`
 
-   ![](content/mod3image58.png)
+   ![](Content/mod3image58.png)
 
    > Note:This command executes the script on the container which stress tests CPU, targeting all cores available to the container. However, because you set a constraint on CPU utilization, the container will never able to consume more than 1 CPU.To validate the CPU usage, go back to PowerShell console displaying **docker stats**. Notice the container CPU utilization is ~25% and not 100%. The CPU utilization may be slightly lower or higher than 25%, so it may not be exact.
 
-   ![](content/mod3image59.png)
+   ![](Content/mod3image59.png)
 
 ### Congratulations!
 
@@ -785,7 +785,7 @@ In this exercise, you will create a Kubernetes cluster using Azure Kubernetes Se
 
 1. If you have multiple subscriptions attached to your account, you will see a list of them displayed post-login. To select the correct subscription, put the name of the subscription in quotes. You can find the **name** field in the output of the **az login** command executed above
 
-   ![](content/mod5image28.png)
+   ![](Content/mod5image28.png)
 
    Record the subscription name in the following text box:
 
@@ -804,7 +804,7 @@ In this exercise, you will create a Kubernetes cluster using Azure Kubernetes Se
 
    > [!hint] The resource group name can be found on the **Resources** tab
 
-   ![](content/getresourcegroupname.jpg)
+   ![](Content/getresourcegroupname.jpg)
 
    > [!help] Expand the next section **IF** you are using your own Azure Subscription and NOT the one provided in the Lab
 
@@ -831,7 +831,7 @@ In this exercise, you will create a Kubernetes cluster using Azure Kubernetes Se
 
    > Note:Note that your fdqn value may differ from the output shown below.
 
-   ![](content/media/image116.png)
+   ![](Content/media/image116.png)
 
 1. Run the following command to download the Kubernetes cluster configuration to the local config file **C:\\users\\Administrator\\.kube\\config**.
 
@@ -855,11 +855,11 @@ In this exercise, you will create a Kubernetes cluster using Azure Kubernetes Se
 
    +++**kubectl get service nginx+++**
 
-   ![](content/mod5image2.png)
+   ![](Content/mod5image2.png)
 
    > Note:Please wait until **EXTERNAL-IP** for the **nginx** service change from **&lt;pending&gt;** to a valid IP address. It may take few minutes and you may have to run the command `kubectl get service nginx` a few times to probe the status of external IP assignment. Another useful parameter is **-w** that can be added to the command to watch as the service output changes. When it is done, it will look like below:
 
-   ![](content/mod5image3.png)
+   ![](Content/mod5image3.png)
 
 1. You can now simply query the content hosted by nginx using the curl command: `start http://$( kubectl get service nginx -o=jsonpath='{.status.loadBalancer.ingress[*].ip}')`
 
@@ -879,11 +879,11 @@ In this exercise, you will create a Kubernetes cluster using Azure Kubernetes Se
 
    **[5]** Click on **Sign In**
 
-   ![](content/mod5image119_1.png)
+   ![](Content/mod5image119_1.png)
 
    ### Dashboard
 
-   ![](content/media/image119.png)
+   ![](Content/media/image119.png)
 
    > Note:You can always access the dashboard by browsing to the URL: **http://127.0.01:8001**. Although this command works with both Windows and Linux, you should only run it on Windows as you have access to a full browser on Windows running inside the lab virtual machine.
 
@@ -947,7 +947,7 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
 
     `az aks nodepool add --resource-group @lab.CloudResourceGroup(containerswrkshp).Name --cluster-name aks-k8s-cluster --os-type Windows --name npwin --node-count 2 --node-taints kubernetes.io/os=windows:NoSchedule`
 
-    ![](content/M5E2-Image1a.png)
+    ![](Content/M5E2-Image1a.png)
 
     > Knowledge: <h3>What does <b>--node-taints kubernetes.io/os=windows:NoSchedule</b> do?</h3>When a taint is applied to a node it means only pods with a declared toleration that matches can be scheduled on it. Therefore, in order to deploy a pod to the Windows Nodes you first have to add a **tolerations** section and **nodeSelector** to your YAML manifest (see below). Manifests for Linux pods do not need to be modified and will, by default, only deploy to Linux nodes. Without these restictions, Kubernetes will simply choose an available node and if it chooses the wrong operating system the Pod will fail to create.
 
@@ -955,7 +955,7 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
 
         `kubectl get nodes -o wide`
 
-        ![](content/M5E2-Image2a.png)
+        ![](Content/M5E2-Image2a.png)
 
         >Alert: At the time of this writing, AKS requires Windows containers to use images based on **Windows Server 2019 Build 1809** .
 
@@ -970,6 +970,9 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
     effect: NoSchedule
     nodeSelector:
     "beta.kubernetes.io/os": windows
+
+    ```
+
     ```
 
 1.  Change to the c:\labs\module5 directory
@@ -982,7 +985,7 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
 
     Notice the **tolerations** and **nodeSelector** sections needed to deploy to Windows Nodes.
 
-    ![](content/M5E2-Image4b.png)
+    ![](Content/M5E2-Image4b.png)
 
 1.  Deploy the Application and Load Balancer using the command
 
@@ -994,13 +997,13 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
 
     +++kubectl get all+++
 
-    ![](content/M5E2-Image5a.png)
+    ![](Content/M5E2-Image5a.png)
 
 1.  launch the browser and verify that the default IIS landing page is shown
 
     +++start http://$( kubectl get service iis-sample -o=jsonpath='{.status.loadBalancer.ingress[*].ip}')+++
 
-    ![](content/M5E2-Image6a.png)
+    ![](Content/M5E2-Image6a.png)
 
 1.  Cleanup resources by deleting the IIS Pod and Service
 
@@ -1010,7 +1013,7 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
 
 You have successfully completed this lab. Click **Next** to advance to the next lab.
 
-![](content/module stop.png)
+![](Content/module stop.png)
 
 # Module 6 - DevOps with Containers
 
@@ -1043,11 +1046,11 @@ In this exercise, you are going to create an Azure DevOps account which will be 
 
 1. From the Dev Portal, click on the **Continue** button.
 
-   ![](content/mod6image1_1.png)
+   ![](Content/mod6image1_1.png)
 
 1. For the Project Name use `firstproject`. then click on **Create Project**
 
-   ![](content/mod6image2_2.png)
+   ![](Content/mod6image2_2.png)
 
 ### Congratulations!
 
@@ -1063,19 +1066,19 @@ In this exercise, you are going to complete the first phase of the CI/CD pipelin
 
 1.  Navigate to **C:\labs\module6** [ +++cd C:\labs\module6;start devops.sln+++ ] within the Windows VM. Double click on the "devops" solution file which will open the project in Visual Studio.
 
-    ![](content/mod6image4.png)
+    ![](Content/mod6image4.png)
 
 1.  On the right, you will see the **Solution Explorer**. You should see two ASP. NET Core applications, a Web API backend project and an MVC Core frontend project.
 
-    ![](content/mod6image5.png)
+    ![](Content/mod6image5.png)
 
 1.  Open **HomeController.cs** in the **mywebapp** project, under the **Controllers** folder. You will see that the **frontend** application retrieves some quotes from the Web API. The URL to reach to the Web API is configured by the container orchestrator used. For example, in Kubernetes, this happens through Labels and Selectors, along with the use of Services.
 
-    ![](content/mod6image6.png)
+    ![](Content/mod6image6.png)
 
 1.  In the **Solution Items** folder, open the **backend-webapi.yaml** file which is the deployment configuration file for Kubernetes cluster. Notice that here the backend application is also exposed with the name **demowebapi**.
 
-    ![](content/mod6image7.png)
+    ![](Content/mod6image7.png)
 
 # Add solution to source control (Git and Azure Repository)
 
@@ -1083,7 +1086,7 @@ In this exercise, you are going to complete the first phase of the CI/CD pipelin
 
 1. Right click choose **Git Bash Here**.
 
-   ![](content/mod6image8.png)
+   ![](Content/mod6image8.png)
 
 1. Run the following commands, one at a time
 
@@ -1097,21 +1100,21 @@ In this exercise, you are going to complete the first phase of the CI/CD pipelin
 
 1. Navigate to https://dev.azure.com/**YourAccountName/YourProjectName** to see the environment. A sample link is <https://dev.azure.com/container-devops-lab/FirstProject>
 
-   ![](content/mod6image9.png)
+   ![](Content/mod6image9.png)
 
 1. Now you are ready to push your local Git repository to a remote repository in Azure DevOps. Navigate to your Code repository by clicking on **Repos - Files**. You will see that your Git repository is empty, as expected. In order to push your local code files into Azure DevOps, copy the commands under **"push an existing repository from command line"**
 
-   ![](content/mod6image10.png)
+   ![](Content/mod6image10.png)
 
 1. Paste them into Git Bash by pressing **Shift + Insert** (or right click and paste into the Git Bash command line). The first line will be run automatically; hit enter to run the second line.
 
    > Knowledge: **Git remote add origin** means to add a "remote URL such as your Azure repo URL" with the alias **origin** to your local git settings for this project folder. You could name it any alias you want, **origin** is just the default. **Git push** means to interact with the server and push code to that URL you provided as origin. The **-u**" will "set-upstream" which means that it will default all pushes and pulls to the **origin** URL and you don't have to specify **origin** in all your future commands.
 
-   ![](content/mod6image11.png)
+   ![](Content/mod6image11.png)
 
 You will see a popup to authenticate to your Microsoft account. Be sure to use your Lab Azure Account on the resources tab. Once authenticated, your project will be pushed to the remote Git repository in Azure DevOps. Return to Azure DevOps in the browser and refresh the page to see your code files populate **Repos - Files**.
 
-    ![](content/mod6image12.png)
+    ![](Content/mod6image12.png)
 
 # Create an Azure Container Registry (ACR)
 
@@ -1121,21 +1124,21 @@ A critical component of the Containerized DevOps lifecycle is the container regi
 
 1. In the [Azure Portal](https://portal.azure.com), click the **plus** icon to add a new resource. Type **"Container Registry"** in the search textbox and click on the result for **Container Registry**.
 
-   ![](content/mod6image13.png)
+   ![](Content/mod6image13.png)
 
 1. Click **Create**.
 
-   ![](content/mod6image14.png)
+   ![](Content/mod6image14.png)
 
 1. Select a unique registry name and specify a resource group. You can select the resource group used in the previous labs if you would like to keep the resources grouped together. Make sure to enable **Admin user** so that build agents can login to ACR and push container images successfully.
 
-   ![](content/container-reg.jpg)
+   ![](Content/container-reg.jpg)
 
    > Note:For future reference, in order to enable features like geo-replication for managing a single registry across multiple regions, content trust for image tag signing, and firewalls and virtual networks (preview) to restrict access to the registry, you must use the Premium SKU.\*
 
 1. While the ACR is being built, you can update your Kubernetes configuration files to use the proper container registry name. Go into Azure DevOps and hit the **Repos** \> **Files** tab. The files that you will need to be edited are: **backend-webapi.yaml, docker-compose.yml, and frontend-webapp.yaml**.
 
-   ![](content/mod6image16.png)
+   ![](Content/mod6image16.png)
 
 1. Go into each of the 3 files individually and replace all instances of the existing ACR name **devopslabacr** with the new ACR name that you just created **(enter your ACR name in all lowercase, otherwise you will get an error later\!)**.
 
@@ -1143,7 +1146,7 @@ A critical component of the Containerized DevOps lifecycle is the container regi
 
 1. Similarly, navigate to the **frontend.yaml** file located in **Exercise2** directory. Replace the image name prefix with the new ACR that you just created instead of the default value **devopslabacr**.
 
-   ![](content/M6Image17a.png)
+   ![](Content/M6Image17a.png)
 
 ### Congratulations!
 
@@ -1158,21 +1161,21 @@ You have successfully completed this exercise. Click **Next** to advance to the 
 In this task , you will create a connection the [Azure Container Registry (ACR)](#exercise-2-setup-a-project-and-azure-container-registry-acr) created in the previous exercise. You will use this connection in the build pipeline to push your new images to the Container Registry and in the release pipeline to have your Kubernetes Cluster pull the images.
 
 1. Navigate to https://dev.azure.com/&lt;YourAccountName&gt;/&lt;YourProjectName&gt;, click on **Project Setting** then **ServiceConnections**
-   ![](content/mod6ex3serviceconn.png)
+   ![](Content/mod6ex3serviceconn.png)
 
 1. Next select **Create Service Connection**
-   ![](content/createserviceconn.png)
+   ![](Content/createserviceconn.png)
 
 1. Select **Docker Registry** for New Service Connection Type and click next
-   ![](content/newservconn.png)
+   ![](Content/newservconn.png)
 
 1. Copy values from the new Azure Container Registry to the Service Connection
 
-   ![](content/devops-acr.jpg)
+   ![](Content/devops-acr.jpg)
 
    Use `ContainerRegistry` for the **Service Connection Name** and press **Save**
 
-   ![](content/mod6ex3serviceconsave.png)
+   ![](Content/mod6ex3serviceconsave.png)
 
 # Create new build pipeline
 
@@ -1180,35 +1183,35 @@ In this task , you will create a connection the [Azure Container Registry (ACR)]
 
 In this task, you are going to create a build pipeline which will be executed on a Linux agent and will produce two Linux container images for your Web App and Web API applications. These images will be tagged automatically with the appropriate build number and then pushed into your Azure Container Registry (ACR) instance.
 
-![](content/aka_linux.png)
+![](Content/aka_linux.png)
 
 1.  Navigate to **Pipelines** - **Builds** page and then click **New pipeline**.
 
-    ![](content/mod6image18_2.png)
+    ![](Content/mod6image18_2.png)
 
 1.  Select **Use the classic editor to create a pipeline without YAML** at the bottom of the "Where is your code" menu.
 
-    ![](content/mod6image94_2.png)
+    ![](Content/mod6image94_2.png)
 
 1.  Select **Azure Repos Git** as your source and then select **Continue** to proceed.
 
-    ![](content/mod6image20.png)
+    ![](Content/mod6image20.png)
 
 1.  Select the **Empty job** option to start from a clean state.
 
-    ![](content/mod6image21.png)
+    ![](Content/mod6image21.png)
 
 1.  Before adding build tasks to the pipeline, you are going to select an agent queue containing agents which will be assigned to handle build requests. Select **ubuntu-1604** agent queue which contains agents installed on Linux OS.
 
-    ![](content/mod6image22_2.png)
+    ![](Content/mod6image22_2.png)
 
 1.  Click on **Get sources** task and leave the default options.
 
-    ![](content/mod6image23.png)
+    ![](Content/mod6image23.png)
 
 1.  Now you will begin adding the necessary tasks to build the web application and web API. You will click the **+** sign to add new tasks:
 
-    ![](content/mod6image24.png)
+    ![](Content/mod6image24.png)
 
 1.  Normally, you might need to add **dotnet build** and **publish** steps, however these are included inside of the Dockerfile and are completed as part of the Docker build process. Just remember when you are creating your own CI/CD pipelines to either include the dotnet build and publish steps in the Dockerfile or the CI build pipeline. For your reference, here is the Dockerfile:
 
@@ -1231,11 +1234,11 @@ In this task, you are going to create a build pipeline which will be executed on
 
 1.  Add a **Docker** task to build container image for web API application.
 
-    ![](content/mod6image25.png)
+    ![](Content/mod6image25.png)
 
 1.  Select the newly added **buildAndPush** task and then proceed to the **Container registry** field. In the Dropdown select the previously created service connection **ContainerRegistry**
 
-    ![](content/setconnectionname.png)
+    ![](Content/setconnectionname.png)
 
 1.  Enter the name of the specific repository, demo-webapi, within your ACR that can be used to retrieve the Web API image.
 
@@ -1250,11 +1253,11 @@ In this task, you are going to create a build pipeline which will be executed on
     | **Build Context**:        | **+++mywebapi**+++                              |
     | **Tags**:                 | **+++$(Build.BuildId)**+++                      |
 
-    ![](content/mod6image96.PNG)
+    ![](Content/mod6image96.PNG)
 
 1.  Now you will add another Docker task for the **webapp** project. **Right-click** the build and release task, then choose **Clone task(s).**
 
-    ![](content/mod6image29.png)
+    ![](Content/mod6image29.png)
 
 1.  Change the **Build Web API Container Image copy** task to the following attributes:
 
@@ -1271,11 +1274,11 @@ In this task, you are going to create a build pipeline which will be executed on
 
 1.  Add a **Command Line Script** task after the newly created Docker tasks.
 
-    ![](content/mod6image97.PNG)
+    ![](Content/mod6image97.PNG)
 
     Configure the first **Command Line Script** task as follows:
 
-    ![](content/media/image175.png)
+    ![](Content/media/image175.png)
 
     Configure the first **Command Line task** as follows:
 
@@ -1284,7 +1287,7 @@ In this task, you are going to create a build pipeline which will be executed on
     | **Display Name**: | **+++Replace build number in backend-webapi.yaml file**+++                        |
     | **Script**:       | **+++bash -c "sed -i 's/BuildNumber/$(Build.BuildId)/g' backend-webapi.yaml"**+++ |
 
-    ![](content/mod6image99.PNG)
+    ![](Content/mod6image99.PNG)
 
 1.  Clone your first command line task, and configure the second **Command Line task** as follows:
 
@@ -1293,7 +1296,7 @@ In this task, you are going to create a build pipeline which will be executed on
     | **Display Name**: | **+++Replace build number in frontend-webapp.yaml file**+++                        |
     | **Script**:       | **+++bash -c "sed -i 's/BuildNumber/$(Build.BuildId)/g' frontend-webapp.yaml"**+++ |
 
-    ![](content/mod6image98.PNG)
+    ![](Content/mod6image98.PNG)
 
     > Note:The previous task ensures that the yaml file's content is updated with the appropriate build number, now it is time to upload it as build artifact to be used in release pipeline later.
 
@@ -1305,7 +1308,7 @@ In this task, you are going to create a build pipeline which will be executed on
     | **Path to Publish**: | **+++frontend-webapp.yaml**+++                   |
     | **Artifact Name**:   | **+++frontend-webapp**+++                        |
 
-    ![](content/mod6image100.PNG)
+    ![](Content/mod6image100.PNG)
 
 1.  Clone your **Publish Build Artifacts** task and modify it as follows:
 
@@ -1315,19 +1318,19 @@ In this task, you are going to create a build pipeline which will be executed on
     | **Path to Publish**: | **+++backend-webapi.yaml**+++                   |
     | **Artifact Name**:   | **+++backend-webapi**+++                        |
 
-    ![](content/mod6image101.PNG)
+    ![](Content/mod6image101.PNG)
 
     Finally change the build pipeline's name to `Web Apps on Linux - CI`. Click **Save & queue** to save and trigger a build.
 
     > Note: You will see a pop-up asking for a comment, you can leave it blank and press Save & Queue on the popup to continue.
 
-    ![](content/mod6image38.png)
+    ![](Content/mod6image38.png)
 
 1.  Your finished build should look like this:
 
     > Note: If you get an error please click on the step with the error and try debugging or the instructor will come by and help you.
 
-    ![](content/mod6image102.PNG)
+    ![](Content/mod6image102.PNG)
 
 # Optional: Import a build pipeline
 
@@ -1343,15 +1346,15 @@ In this task, you are going to create a build pipeline which will be executed on
 
 1. Select **ubuntu-1604** as an agent specification
 
-   ![](content/mod6image41_2.png)
+   ![](Content/mod6image41_2.png)
 
 1. Click on **Get sources** and make sure that correct Git repository and branch is selected.
 
-   ![](content/mod6image42.png)
+   ![](Content/mod6image42.png)
 
 1. Select the docker tasks one by one and enter the subscription and ACR information.
 
-   ![](content/mod6image43.png)
+   ![](Content/mod6image43.png)
 
 1. Make sure the Build pipeline is named `Web Apps on Linux-CI` to stay aligned with the following screenshots. Click **Save & queue**.
 
@@ -1371,43 +1374,43 @@ The build pipeline is used for compiling the application, building a container i
 
 1. Navigate to https://dev.azure.com/&lt;YourAccountName&gt;/&lt;YourProjectName&gt; and go to the **Pipelines** - **Releases** page and click **New pipeline**.
 
-   ![](content/mod6image44.png)
+   ![](Content/mod6image44.png)
 
 1. Although there are templates for working with Kubernetes deployments, you are going to start with the empty template. Click **Empty job** to create an empty release pipeline.
 
-   ![](content/mod6image45.png)
+   ![](Content/mod6image45.png)
 
 1. Click on the release pipeline name and change it to `AKS - Release`. Then click on **Add an artifact** to link this release pipeline to the build artifacts from the build pipeline.
 
-   ![](content/mod6image46.png)
+   ![](Content/mod6image46.png)
 
 1. On the **Add artifact** popup, select **Web Apps on Linux-CI** build pipeline. Finally, select **Add**.
 
-   ![](content/mod6image47.png)
+   ![](Content/mod6image47.png)
 
 1. Click **1 job, 0 task** link available inside the **Stage 1**.
 
-   ![](content/mod6image48.png)
+   ![](Content/mod6image48.png)
 
 1. Click on the **Agent job** and then select **ubuntu-1604** from the Agent Specification dropdown.
 
-   ![](content/mod6image49_2.png)
+   ![](Content/mod6image49_2.png)
 
 1. Now you are ready to add tasks to deploy your containers to the Kubernetes cluster. Click the **plus** button on **Agent phase**, and then find **kubectl** task.
 
-   ![](content/mod6image50.png)
+   ![](Content/mod6image50.png)
 
    Click **Add** to add the task. Make sure to add two copies of this task, one for deploying **webapi** and another for **webapp**.
 
-   ![](content/mod6image50_2.png)
+   ![](Content/mod6image50_2.png)
 
 1. Change the first task name to `kubectl apply webapp`. Next, add a **Kubernetes Service Connection** by clicking on the "+ New" button
 
-   ![](content/mod6image52_3.png)
+   ![](Content/mod6image52_3.png)
 
 1. Add a connection to your Kubernetes Cluster. Choose your Azure subscription and the Kubernetes cluster created in the previous module. Set the Namespace to `default**+++ and the Connection Name to +++**k8s workshop cluster`. Finally, click **save**
 
-   ![](content/mod6image110_2.png)
+   ![](Content/mod6image110_2.png)
 
    > Knowledge:For more information regarding the various connection types, and using helm charts for deployment, visit <https://docs.microsoft.com/en-us/azure/devops/pipelines/apps/cd/deploy-aks?view=azure-devops>.
    >
@@ -1417,7 +1420,7 @@ The build pipeline is used for compiling the application, building a container i
 
    - Check the box for **Use configuration files** and click on the 3 dots to the right of the input box to explore files
 
-   ![](content/mod6image53.png)
+   ![](Content/mod6image53.png)
 
    - Select the main folder, and in the **frontend-webapp** folder, select **frontend-webapp.yaml**, then hit **OK**.
 
@@ -1431,7 +1434,7 @@ The build pipeline is used for compiling the application, building a container i
    | **Secret name**:                        | `acr` <br> This is the secret which will be created using your ACR credentials, and will be stored in the Kubernetes cluster. You will notice this is same as the **imagePullSecrets** parameter in the yaml deployment files **frontend-webapp.yaml** and **backend-webapi.yaml** |
    | **Force update secret**:                | **Selected** <br> This parameter will delete the secret and recreate it, and prevent getting errors caused by existing secret with same name                                                                                                                                       |
 
-   ![](content/mode6image54_2.png)
+   ![](Content/mode6image54_2.png)
 
 1. Similarly, configure second Kubernetes task:
 
@@ -1441,7 +1444,7 @@ The build pipeline is used for compiling the application, building a container i
 
    - Check the box for **Use Configuration files**, and then the below input box will open:
 
-   ![](content/mod6image53.png)
+   ![](Content/mod6image53.png)
 
    - Click on the 3 dots to the right of the input box to explore files, select the main folder, select backend-webapi folder, select **backend-webapi.yaml**, then hit OK.
 
@@ -1459,38 +1462,37 @@ The build pipeline is used for compiling the application, building a container i
 
 1. Look at the top right of your page and you will see the buttons as in the screenshot below. First, Save the release pipeline. Then click on the **Create Release** button to trigger a release.
 
-   ![](content/mod6image55a.png)
+   ![](Content/mod6image55a.png)
 
 1. On **Create a new release** window select the Stage 1 from the dropdown. Keep all defaults and press **Create**.
 
-
-    ![](content/mod6image56.png)
+   ![](Content/mod6image56.png)
 
 1. Go back to the Release page by clicking on the name of the created release. Click **Deploy**.
 
-   ![](content/mod6image57.png)
+   ![](Content/mod6image57.png)
 
 1. Finally, press **Deploy** to kick off the deployment to AKS cluster.
 
-   ![](content/mod6image58.png)
+   ![](Content/mod6image58.png)
 
    When it succeeds you will see a similar log as below:
 
-   ![](content/mod6image59.png)
+   ![](Content/mod6image59.png)
 
 1. Now your deployment in Azure Pipelines is completed, but the deployment into the Kubernetes cluster is just beginning. In Powershell type `*kubectl get all*`. Wait until your two new deployements **deployments.apps/demowebapi** shows 2 available and **deployments.apps/demowebapp** shows 1 avaialble.
 
-![](content/M6Image60b.png)
+![](Content/M6Image60b.png)
 
 1. Open the browser using the **EXTERNAL-IP** for the **service/demowebapp** +++start http://$( kubectl get service demowebapp -o=jsonpath='{.status.loadBalancer.ingress[*].ip}')+++
 
 1. When the web site is loaded, click on **Quotes** link.
 
-   ![](content/mod6image62.png)
+   ![](Content/mod6image62.png)
 
    > Note: Notice that frontend web application is successfully fetching quotes from the backend Web API. You can check **HomeController.cs** in the **webapp** project, and see that the frontend application is connecting to the backend Web API using the following URL <http://demowebapi:9000/api/quotes>. The URL's hostname is **demowebapi** is the service name of the backend application configured in the **backend-webapi.yaml** file.
 
-   ![](content/mod6image63.png)
+   ![](Content/mod6image63.png)
 
 # Optional: Import a release pipeline
 
@@ -1502,27 +1504,27 @@ The build pipeline is used for compiling the application, building a container i
 
    > Note: It seems that we can only do that when at least one pipeline exists. So you will need to create an empty pipeline first.
 
-   ![](content/mod6image64.png)
+   ![](Content/mod6image64.png)
 
 1. Select **C:\\labs\\module6-ext\\AKS - Release-CD.json** and click **Import**
 
 1. Make sure the input Artifact is valid by deleting the default one: click on the Artifact Name and then **Delete**. Finally, click on **Add an Artifact** to add the artifact from your new build.
 
-   ![](content/mod6image65.png)
+   ![](Content/mod6image65.png)
 
 1. Click on the list of tasks under **Stage 1**
 
-   ![](content/mod6image66.png)
+   ![](Content/mod6image66.png)
 
 1. Under agent job, select **Hosted Ubuntu 1604** as an agent pool
 
-   ![](content/mod6image67.png)
+   ![](Content/mod6image67.png)
 
 1. Select the Kubernetes tasks one by one and enter the subscription, resource group and cluster information. Also enter the ACR information under **Secrets**
 
-   ![](content/mod6image68.png)
+   ![](Content/mod6image68.png)
 
-   ![](content/mod6image69.png)
+   ![](Content/mod6image69.png)
 
 1. Once all the Kubernetes tasks are updated, **"Some settings need attention"** should disappear and you can save the pipeline. Go back to Step 12 in the previous task to start a release and deploy the application to your kubernetes cluster. Then, you will check status of the deployment using the kubernetes dashboard and subsequently test the application.
 
@@ -1541,14 +1543,14 @@ In this task, you are going to create a build pipeline which will be executed on
 
 [Return to list of exercises](#module-6-table-of-contents) - [Return to list of modules](#modules)
 
-![](content/aka_win.png)
+![](Content/aka_win.png)
 
 # Update Project
 
 1. Navigate to +++cd c:\labs\module6\Exercise2+++ and open the **devops_windows.sln** solution in Visual Studio 2019 or greater.
 1. In Visual Studio, open **Solution Items -> frontend-yaml** file
 
-   ![](content/M6E5_Image01.png)
+   ![](Content/M6E5_Image01.png)
 
 1. Replace the default Image Name **devopslabacr** with the name of your Azure Container Registry.
 
@@ -1556,13 +1558,13 @@ In this task, you are going to create a build pipeline which will be executed on
 
 1. Next, in the Solition Explorer, **devops_windows** project, navigate to Properties then PublishProfiles. Right-Click on **docker.pubxml** and choose "**Add Ignored File to Source Control**"
 
-   ![](content/M6E5_Image02_a.png)
+   ![](Content/M6E5_Image02_a.png)
 
 > Knowledge: The Docker publish profile is used by the Build Pipeline to ensure that the IIS Website is correctly prepared for the Docker Image.
 
 1. Finally, Click on **Team Explorer** then **Changes**. Next, add a Comment then click "Commit Staaged and Push".
 
-   ![](content/M6E5_Image03_a.png)
+   ![](Content/M6E5_Image03_a.png)
 
 > Alert: If you get an error when trying to push your changes you may need to first do a **pull** to update your local files then **push** again
 
@@ -1570,37 +1572,37 @@ In this task, you are going to create a build pipeline which will be executed on
 
 1. Navigate to **Pipelines** - **Builds** and click **New** - **Import a pipeline**.
 
-   ![](content/mod6image70.png)
+   ![](Content/mod6image70.png)
 
 1. Select **C:\\labs\\module6-ext\\Web Apps on Windows-CI.json** and click **Import**
 
 1. You will see that some settings need to be updated. Click on **Pipeline**
 
-   ![](content/mod6image71a.png)
+   ![](Content/mod6image71a.png)
 
 1. Select **Azure Pipelines** - **windows-2019** as an agent pool and specification. Keep confiuration as Release.
 
    > Note: This is a Windows Server 2019 based agent, hosted by microsoft. This is important since we are about to build Windows Server 2019 container images.
 
-   ![](content/mod6image71_2.PNG)
+   ![](Content/mod6image71_2.PNG)
 
 1. Click on **Get sources** and make sure that correct Git repository and branch are selected.
 
-   ![](content/mod6image72.png)
+   ![](Content/mod6image72.png)
 
 1. Select **Build and Push IIS** task and choose the container registry connection created in Exercise 1 (ContainerRegistry).
 
-   ![](content/mod6image73a.png)
+   ![](Content/mod6image73a.png)
 
 1. Make sure the Build pipeline is named **Web Apps on Windows-CI** to stay aligned with the following screenshots. Then click on **Save & queue** to start the build.
 
-   ![](content/mod6image74.png)
+   ![](Content/mod6image74.png)
 
 1. Your finished build should look like this
 
    > Note:If you get an error please click on the step with the error and try debugging or the instructor will come by and help you
 
-![](content/mod6image75d.png)
+![](Content/mod6image75d.png)
 
 ### Congratulations!
 
@@ -1616,37 +1618,37 @@ The build pipeline is used for compiling the application, building a container i
 
 1. Navigate to **Pipelines** - **Releases** and click **New** - **Import a pipeline**.
 
-   ![](content/media/image218.png)
+   ![](Content/media/image218.png)
 
 1. Select **C:\\labs\\module6-ext\\AKS-Win Release.json** and click **Import**
 
 1. Make sure that the input Artifact is valid by deleting the default one: click on the Artifact Name and then **Delete**.
 
-   ![](content/media/image219.png)
+   ![](Content/media/image219.png)
 
 1. Finally, click on **Add** **an Artifact** to add the artifact coming from your **Web Apps on Windows-CI** build then click **Add**.
 
-   ![](content/media/image220.png)
+   ![](Content/media/image220.png)
 
 1. Update the deployment task by clicking on the tasks link under **Stage 1**
 
-   ![](content/M6E6_Image1a.png)
+   ![](Content/M6E6_Image1a.png)
 
 1. Click on **Agent Job** and set the Agent Pool and set the **Agent Pool** to Azure Pipelines and **Agent Specification** to Windows-2019. You must use a Windows Agent to build Windows images.
 
-   ![](content/M6E6_Image2a.png)
+   ![](Content/M6E6_Image2a.png)
 
 1. Next, click on the **kubectl apply** task and verify that the **Service Connection Type** and **Kubernetes Service Connection** are set correctly
 
-   ![](content/M6E6_Image3a.png)
+   ![](Content/M6E6_Image3a.png)
 
 1. Scoll down and expand the **Secrets** section then update the **Docker Registry service connection** with the previously created connection **ContainerRegistr**
 
-   ![](content/M6E6_Image7a.png)
+   ![](Content/M6E6_Image7a.png)
 
 1. Finally, click **Save** Then **Create Release** then **Save** to deploy your Windows Container to AKS
 
-   ![](content/M6E6_Image4a.png)
+   ![](Content/M6E6_Image4a.png)
 
 1. Wait for the Release pipeline to successfully complete.
 
@@ -1656,19 +1658,19 @@ The build pipeline is used for compiling the application, building a container i
 
 1. Wait for the **devops-win** deployment to show 2 pods available then browse to the EXTERNAL-IP address shown for the **devops-win** service
 
-   ![](content/M6E6_Image5a.png)
+   ![](Content/M6E6_Image5a.png)
 
 > Alert: It can take several minutes before the pods are ready
 
 1. Browse to devops-win application `*start http://$( kubectl get service devops-win -o=jsonpath='{.status.loadBalancer.ingress[*].ip}')*`
 
-![](content/M6E6_Image6a.png)
+![](Content/M6E6_Image6a.png)
 
 ### Congratulations!
 
 You have successfully completed this exercise.
 
-![](content/module stop.png)
+![](Content/module stop.png)
 
 # Module 7 - Monitoring and Troubleshooting Containers
 
@@ -1703,14 +1705,14 @@ Metrics are written to the metrics store and log data is written to the logs sto
 1. From the +++https://portal.azure.com+++ click on **Create a Resource** and search for **Log Ananytics Workspace**
 1. Choose the Rosource Group used for the Labs and a unique Workspace Name then click on **Create**
 
-   ![](content/m7image1_a.png)
+   ![](Content/m7image1_a.png)
 
 1. Navigate to your AKS Cluster in the Azure Portal using the search bar
 
    1. On the cluster overiew page, select **Monitor Containers**
    1. Select the existing Log Analytics workspace created earlier and click **Enable**
 
-   ![](content/m7image2_a.png)
+   ![](Content/m7image2_a.png)
 
 1. Ensure you can access your AKS cluster through the Azure CLI by getting the credentials: `az aks get-credentials --resource-group <resource_group_name> --name aks-k8s-cluster`
 
@@ -1736,7 +1738,7 @@ One of the first things you are going to want to do is enable the Master Node Lo
 
 1. Choose the **Diagnostic settings** blade at the Resource Group level.
 
-   ![](content/diagnosticsettings.png)
+   ![](Content/diagnosticsettings.png)
 
 1. Select your AKS cluster resource
 
@@ -1744,7 +1746,7 @@ One of the first things you are going to want to do is enable the Master Node Lo
 
    > Note: It may take several minutes for the Master node logs to start syncing with Log Analytics.
 
-   ![](content/masterlogs.png)
+   ![](Content/masterlogs.png)
 
 1. To understand how you can use Azure Monitor for Containers to analyze your AKS cluster,leverage the insight provided in the official Azure Monitor documentation: <https://docs.microsoft.com/en-us/azure/azure-monitor/insights/container-insights-analyze>
 
@@ -1760,15 +1762,15 @@ Now that we understand the functionality provided through Azure Monitor for Cont
 
 1. Navigate to the **Kubernetes CLuster** then the **Insights** section under Monitoring. Finally, select the **Containers** tab. Select one of the available containers running in the cluster, be it an instance of the **Web App** container or the **Web API** container.
 
-   ![](content/m7image3_a.png)
+   ![](Content/m7image3_a.png)
 
 1. Once you have selected a running container,you will see a property pane appear on the right-hand side your screen. From the property pane, select **View in analytics - View container logs**. This output will mirror the output obtained by running `kubectl logs` on a particular pod.
 
-   ![](content/viewinanalytics.png).png)
+   ![](Content/viewinanalytics.png).png)
 
    > _Note: You can also access the logs for your cluster directly from the AKS cluster resource under **Logs**._
 
-   ![](content/akslogsportal.png)
+   ![](Content/akslogsportal.png)
 
 1. Run a sample query to list all of a container's lifecycle information.
 
@@ -1790,4 +1792,4 @@ Now that we understand the functionality provided through Azure Monitor for Cont
 
 You have successfully completed this lab. To mark the lab as complete click **End**
 
-![](content/module stop.png)
+![](Content/module stop.png)
