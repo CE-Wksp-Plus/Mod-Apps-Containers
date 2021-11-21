@@ -38,7 +38,7 @@ In this exercise, you will launch a fully functional WordPress blog engine using
 
 1. To open a command line prompt, right click on the desktop and choose **open terminal**.
 
-   ![](content/media/image2.png)
+   ![Alt Text](content/media/image2.png)
 
 1. Run "**sudo -i**" to ensure all commands have elevated privileges. You will be prompted for the VM password, type it in, then press enter.
 
