@@ -265,7 +265,7 @@ In this exercise, you will package a simple ASP.NET Core MVC application into a 
 
 You have successfully completed this lab. Click **Next** to advance to the next lab.
 
-![](Content/module stop.png)
+![](Content/modulestop.png)
 
 # Module 3 - Docker Advanced Concepts
 
@@ -318,7 +318,7 @@ Volumes are initialized when a container is created. Some of the key characteris
 1.  You are now ready to run a container in the interactive mode and mount the host directory as a data volume. Run the command
     `docker run -it -v C:/MyData/:C:/Data/ mcr.microsoft.com/windows/nanoserver:1809 CMD`
 
-        ![](Content/mod3image7.png)
+    ![](Content/mod3image7.png)
 
         >Knowledge: Notice the **-v** switch that is required to mount the host directory **C:\MyData** inside the container as **C:\Data**. This will result in container access to contents of **C:\MyData** on the host inside the container as **C:\Data**. You can choose same name for the directory inside the container and host but it's not mandatory as you see in the above command (**C:\MyData** on the host and **C:\Data** inside the container)
 
@@ -423,7 +423,7 @@ In this exercise, you will learn how to create and use a shared-storage volume. 
 
 1.  You can use **docker inspect** command with the volumes too. Run the command `docker inspect myvolume`
 
-        ![](Content/mod3image21.png)
+    ![](Content/mod3image21.png)
 
         >Note: **Mountpoint** is set at a location on the **C** drive under the **ProgramData\docker** folder. This is the default location for local storage drivers. If you use another commercial storage driver,
 
@@ -955,7 +955,7 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
 
         `kubectl get nodes -o wide`
 
-        ![](Content/M5E2-Image2a.png)
+    ![](Content/M5E2-Image2a.png)
 
         >Alert: At the time of this writing, AKS requires Windows containers to use images based on **Windows Server 2019 Build 1809** .
 
@@ -1013,7 +1013,7 @@ In this exercise, you will add an additional node pool to your Azure Kubernetes 
 
 You have successfully completed this lab. Click **Next** to advance to the next lab.
 
-![](Content/module stop.png)
+![](Content/modulestop.png)
 
 # Module 6 - DevOps with Containers
 
@@ -1114,7 +1114,7 @@ In this exercise, you are going to complete the first phase of the CI/CD pipelin
 
 You will see a popup to authenticate to your Microsoft account. Be sure to use your Lab Azure Account on the resources tab. Once authenticated, your project will be pushed to the remote Git repository in Azure DevOps. Return to Azure DevOps in the browser and refresh the page to see your code files populate **Repos - Files**.
 
-    ![](Content/mod6image12.png)
+![](Content/mod6image12.png)
 
 # Create an Azure Container Registry (ACR)
 
@@ -1670,7 +1670,7 @@ The build pipeline is used for compiling the application, building a container i
 
 You have successfully completed this exercise.
 
-![](Content/module stop.png)
+![](Content/modulestop.png)
 
 # Module 7 - Monitoring and Troubleshooting Containers
 
@@ -1792,4 +1792,4 @@ Now that we understand the functionality provided through Azure Monitor for Cont
 
 You have successfully completed this lab. To mark the lab as complete click **End**
 
-![](Content/module stop.png)
+![](Content/modulestop.png)
