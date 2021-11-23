@@ -701,7 +701,7 @@ In this exercise you will setup and configure MiniKube on an Ubuntu VM. MiniKube
 1.  Navigate to the lab files by running:
     `cd labs/module5`
 
-        ![](Content/media/image67.png)
+    ![](Content/media/image67.png)
 
 1.  You are now to install Minikube. Run the following two commands (the first command gives execute permission to your script, the second script runs it):
 
@@ -780,7 +780,7 @@ In this task you will create a new pod and enable a health probe. To test the pr
 
         >Note: The ***STATUS*** column shows Running and ***RESTARTS*** column have the value zero. That's expected because container is just started, and the health probe has not failed yet.
 
-        ![](Content/media/image75.png)
+    ![](Content/media/image75.png)
 
 1.  After 3-4 minutes if you view the status of pods again you should see the RESTARTS column with the value 1 (or higher depending on how long you have waited to check the status of the pod)
 
@@ -793,7 +793,7 @@ In this task you will create a new pod and enable a health probe. To test the pr
 
         >Note: This describes the pod in detail along with the events that are happening including the failed health probes
 
-        ![](Content/media/image77.png)
+    ![](Content/media/image77.png)
 
 1.  Eventually after failing the health probes multiple times in a short interval container will be put under **_CrashLoopBackOff_** status.
 
@@ -824,13 +824,13 @@ In this task you will create a new pod and enable a health probe. To test the pr
 1.  Let's look at the pods along with their labels.  
     `kubectl get pods --show-labels`
 
-        ![](Content/media/image79.png)
+    ![](Content/media/image79.png)
 
          You can also list all the replica sets that are available by using the command:
 
     `kubectl get replicaset`
 
-        ![](Content/media/image80.png)
+    ![](Content/media/image80.png)
 
         >Note:Notice we have three pods running. If you delete one of them, replica set will ensure that total pods count remain three and it will do that by creating a new pod.
 
