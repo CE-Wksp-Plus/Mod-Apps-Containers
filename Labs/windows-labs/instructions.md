@@ -1201,7 +1201,7 @@ In this task, you are going to create a build pipeline which will be executed on
 
     ![](Content/mod6image21.png)
 
-1.  Before adding build tasks to the pipeline, you are going to select an agent queue containing agents which will be assigned to handle build requests. Select **ubuntu-1604** agent queue which contains agents installed on Linux OS.
+1.  Before adding build tasks to the pipeline, you are going to select an agent queue containing agents which will be assigned to handle build requests. Select **ubuntu-1804** agent queue which contains agents installed on Linux OS.
 
     ![](Content/mod6image22_2.png)
 
@@ -1344,7 +1344,7 @@ In this task, you are going to create a build pipeline which will be executed on
 
 1. Select **C:\\labs\\module6-ext\\Web Apps on Linux-CI.json** and click **Import**
 
-1. Select **ubuntu-1604** as an agent specification
+1. Select **ubuntu-1804** as an agent specification
 
    ![](Content/mod6image41_2.png)
 
@@ -1392,7 +1392,7 @@ The build pipeline is used for compiling the application, building a container i
 
    ![](Content/mod6image48.png)
 
-1. Click on the **Agent job** and then select **ubuntu-1604** from the Agent Specification dropdown.
+1. Click on the **Agent job** and then select **ubuntu-1804** from the Agent Specification dropdown.
 
    ![](Content/mod6image49_2.png)
 
