@@ -1,1 +1,1 @@
-# Modernizing-Apps-with-Containers-and-Orchestrators
+# WorkshopPLUS - Modernizing-Apps-with-Containers-and-Orchestrators
